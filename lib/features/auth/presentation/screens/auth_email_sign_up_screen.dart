@@ -115,7 +115,11 @@ class _AuthEmailSignUpScreenState extends State<AuthEmailSignUpScreen> {
                       );
 
                       // Home Screen
-                      Get.off(() => HomeScreen());
+                      Get.off(
+                        () => HomeScreen(
+                          userName: userNameSignUpController.text.trim(),
+                        ),
+                      );
                     } else {
                       KSnackBar.error(
                         title: "Error",

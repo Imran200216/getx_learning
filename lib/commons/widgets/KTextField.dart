@@ -7,6 +7,7 @@ class KTextField extends StatefulWidget {
   final bool isPassword;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
+  final void Function(String)? onFieldSubmitted; // ✅ Optional callback
 
   const KTextField({
     super.key,
@@ -16,6 +17,7 @@ class KTextField extends StatefulWidget {
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
     this.validator,
+    this.onFieldSubmitted, // ✅ Accept from outside
   });
 
   @override
@@ -32,18 +34,19 @@ class _KTextFieldState extends State<KTextField> {
       keyboardType: widget.keyboardType,
       obscureText: widget.isPassword ? _obscure : false,
       validator: widget.validator,
+      onFieldSubmitted: widget.onFieldSubmitted, // ✅ Pass to TextFormField
       decoration: InputDecoration(
         hintText: widget.hintText,
         prefixIcon: Icon(widget.prefixIcon),
         suffixIcon: widget.isPassword
             ? IconButton(
-                icon: Icon(_obscure ? Icons.visibility_off : Icons.visibility),
-                onPressed: () {
-                  setState(() {
-                    _obscure = !_obscure;
-                  });
-                },
-              )
+          icon: Icon(_obscure ? Icons.visibility_off : Icons.visibility),
+          onPressed: () {
+            setState(() {
+              _obscure = !_obscure;
+            });
+          },
+        )
             : null,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
